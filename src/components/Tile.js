@@ -1,13 +1,9 @@
-import { useState } from "react";
-
-function Tile({}) {
-  let [status, setStatus] = useState(false);
-  const flipStatus = () => {
-    setStatus((prevStatus) => !prevStatus);
-  };
-
+function Tile({ displayStatus, nextStatus, coords, flipStatus }) {
   return (
-    <div className={`${status ? "on" : "off"} tile`} onClick={flipStatus}></div>
+    <div
+      onClick={() => flipStatus(coords[0], coords[1])}
+      className={`${displayStatus ? "on" : "off"} tile`}
+    ></div>
   );
 }
 
