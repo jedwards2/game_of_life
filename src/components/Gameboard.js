@@ -1,6 +1,11 @@
 import Tile from "./Tile";
 
-function Gameboard({ tiles, flipStatus }) {
+function Gameboard({
+  tiles,
+  forceFlipStatus,
+  updateNextStatus,
+  updateAllStates,
+}) {
   const allRows = tiles.map((row, idx1) => {
     let currentRow = row.map((tile, idx2) => {
       return (
@@ -9,7 +14,7 @@ function Gameboard({ tiles, flipStatus }) {
             displayStatus={tile.displayStatus}
             nextStatus={tile.nextStatus}
             coords={[idx1, idx2]}
-            flipStatus={flipStatus}
+            forceFlipStatus={forceFlipStatus}
           />
         </div>
       );
@@ -26,16 +31,64 @@ function Gameboard({ tiles, flipStatus }) {
       for (let j = 0; j < tiles[i].length; j++) {
         let friendCount = 0;
         let status = tiles[i][j].displayStatus;
+        let iCheckL = i - 1 >= 0;
+        let jCheckL = j - 1 >= 0;
+        let iCheckH = i + 1 < tiles.length;
+        let jCheckH = j + 1 < tiles[i].length;
 
+        if (iCheckL && jCheckL) {
+          if (tiles[i - 1][j - 1].displayStatus) {
+            friendCount += 1;
+          }
+        }
+        if (iCheckL) {
+          if (tiles[i - 1][j].displayStatus) {
+            friendCount += 1;
+          }
+        }
+        if (iCheckL && jCheckH) {
+          if (tiles[i - 1][j + 1].displayStatus) {
+            friendCount += 1;
+          }
+        }
+        if (jCheckL) {
+          if (tiles[i][j - 1].displayStatus) {
+            friendCount += 1;
+          }
+        }
+        if (jCheckH) {
+          if (tiles[i][j + 1].displayStatus) {
+            friendCount += 1;
+          }
+        }
+
+        if (iCheckH && jCheckL) {
+          if (tiles[i + 1][j - 1].displayStatus) {
+            friendCount += 1;
+          }
+        }
+        if (iCheckH) {
+          if (tiles[i + 1][j].displayStatus) {
+            friendCount += 1;
+          }
+        }
+        if (iCheckH && jCheckH) {
+          if (tiles[i + 1][j + 1].displayStatus) {
+            friendCount += 1;
+          }
+        }
+
+        //final decisions
         if (status && (friendCount === 2 || friendCount === 3)) {
-          tiles[i][j].nextStatus = !tiles[i][j].nextStatus;
+          updateNextStatus(i, j, true);
         } else if (!status && friendCount === 3) {
-          tiles[i][j].nextStatus = true;
+          updateNextStatus(i, j, true);
         } else {
-          tiles[i][j].nextStatus = false;
+          updateNextStatus(i, j, false);
         }
       }
     }
+    updateAllStates();
   }
 
   return (

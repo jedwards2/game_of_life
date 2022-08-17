@@ -1,7 +1,7 @@
-function Tile({ displayStatus, nextStatus, coords, flipStatus }) {
+function Tile({ displayStatus, nextStatus, coords, forceFlipStatus }) {
   return (
     <div
-      onClick={() => flipStatus(coords[0], coords[1])}
+      onClick={() => forceFlipStatus(coords[0], coords[1])}
       className={`${displayStatus ? "on" : "off"} tile`}
     ></div>
   );
