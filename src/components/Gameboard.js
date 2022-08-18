@@ -6,6 +6,20 @@ function Gameboard({
   updateNextStatus,
   updateAllStates,
 }) {
+  const notes = [
+    ["G", "A#", "D", "F#", "A", "C", "E", "G#", "B", "C#", "D#", "F"],
+    ["E", "G", "B", "D#", "F#", "A", "C#", "F", "G#", "A#", "C", "D"],
+    ["C", "D#", "G", "B", "D", "F", "A", "C#", "E", "F#", "G#", "A#"],
+    ["G#", "B", "D#", "G", "A#", "C#", "F", "A", "C", "D", "E", "F#"],
+    ["F", "G#", "C", "E", "G", "A#", "D", "F#", "A", "B", "C#", "D#"],
+    ["D", "F", "A", "C#", "E", "G", "B", "D#", "F#", "G#", "A#", "C"],
+    ["A#", "C#", "F", "A", "C", "D#", "G", "B", "D", "E", "F#", "G#"],
+    ["F#", "A", "C#", "F", "G#", "B", "D#", "G", "A#", "C", "D", "E"],
+    ["D#", "F#", "A#", "D", "F", "G#", "C", "E", "G", "A", "B", "C#"],
+    ["C#", "E", "G#", "C", "D#", "F#", "A#", "D", "F", "G", "A", "B"],
+    ["B", "D", "F#", "A#", "C#", "E", "G#", "C", "D#", "F", "G", "A"],
+    ["A", "C", "E", "G#", "B", "D", "F#", "A#", "C#", "D#", "F", "G"],
+  ];
   const allRows = tiles.map((row, idx1) => {
     let currentRow = row.map((tile, idx2) => {
       return (
@@ -15,10 +29,12 @@ function Gameboard({
             nextStatus={tile.nextStatus}
             coords={[idx1, idx2]}
             forceFlipStatus={forceFlipStatus}
+            note={notes[idx1][idx2]}
           />
         </div>
       );
     });
+
     return (
       <div className="tile-row" key={idx1}>
         {currentRow}
@@ -79,7 +95,7 @@ function Gameboard({
         }
 
         //final decisions
-        if (status && (friendCount === 2 || friendCount === 3)) {
+        if ((status && friendCount === 2) || (status && friendCount === 3)) {
           updateNextStatus(i, j, true);
         } else if (!status && friendCount === 3) {
           updateNextStatus(i, j, true);
