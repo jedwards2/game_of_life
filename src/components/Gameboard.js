@@ -108,11 +108,9 @@ function Gameboard({
   }
 
   return (
-    <div>
-      {allRows}
-      <div>
-        <button onClick={() => newRow(tiles)}>Compute New Board</button>
-      </div>
+    <div className="gameboard">
+      <div>{allRows}</div>
+      <button onClick={() => newRow(tiles)}>Compute New Board</button>
     </div>
   );
 }
