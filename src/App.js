@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 
 function App() {
   let [tiles, setTiles] = useState([]);
-  let [height, setHeight] = useState(12);
-  let [width, setWidth] = useState(12);
+  let [height, setHeight] = useState(10);
+  let [width, setWidth] = useState(10);
 
   useEffect(() => {
     let tiles = [];
